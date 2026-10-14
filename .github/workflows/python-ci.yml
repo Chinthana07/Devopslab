@@ -1,24 +1,30 @@
 
-name: Python CI
+name: Python Build and Test
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
-      - name: Run Python program
-        run: python hello.py
+      - name: Build - Compile Python files
+        run: python -m compileall -q .
+
+      - name: Test Python program
+        run: python -m unittest -v
+
 
 
